@@ -11,11 +11,7 @@ class Arguments {
 	}
 
 	public function getCommand() : ?string {
-		if(count($this->_arguments) > 0){
-			return $this->_arguments[0];
-		}
-
-		return null;
+		return $this->get(0);
 	}
 
 	public function getTask(array $options = []){
@@ -23,8 +19,16 @@ class Arguments {
 			'default' => 'help'
 		], $options);
 
-		if(count($this->_arguments) > 1){
-			return $this->_arguments[1];
+		return $this->get(1, $settings);
+	}
+
+	public function get(int $index, array $options = []) : ?string {
+		$settings = array_merge([
+			'default' => null
+		], $options);
+
+		if($index < count($this->_arguments)){
+			return $this->_arguments[$index];
 		}
 
 		return $settings['default'];

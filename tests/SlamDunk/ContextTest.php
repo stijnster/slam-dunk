@@ -5,6 +5,8 @@ class SlamDunkContextTest extends \PHPUnit\Framework\TestCase{
 	public function testValidContextCreation(){
 		$context = new \SlamDunk\Context(_ROOT_PATH);
 		$this->assertInstanceOf('\\SlamDunk\\Context', $context);
+		$this->assertInstanceOf('\\SlamDunk\\Arguments', $context->getArguments());
+		$this->assertEquals([], $context->getTasks());
 	}
 
 	public function testInValidContextCreation(){
