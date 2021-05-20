@@ -2,15 +2,35 @@
 
 class SlamDunkArgumentsTest extends \PHPUnit\Framework\TestCase{
 
-	public function testValidContextCreation(){
-		$context = new \SlamDunk\Context(_ROOT_PATH);
-		$this->assertInstanceOf('\\SlamDunk\\Context', $context);
+	public function testWithoutArguments(){
+		$arguments = new \SlamDunk\Arguments();
+		$this->assertNull($arguments->getCommand());
+		$this->assertEquals('help', $arguments->getTask());
+		$this->assertEquals('something', $arguments->getTask([ 'default' => 'something' ]));
+		$this->assertEquals('', $arguments->getRemainingArguments());
 	}
 
-	public function testInValidContextCreation(){
-		$this->expectException(\SlamDunk\Exception::class);
-		$context = new \SlamDunk\Context(_ROOT_PATH.DIRECTORY_SEPARATOR.'fake');
-		$this->assertInstanceOf('\\SlamDunk\\Context', $context);
+
+	public function testWithCommand(){
+		$arguments = new \SlamDunk\Arguments([ '/bin/slam-dunk' ]);
+		$this->assertEquals('/bin/slam-dunk', $arguments->getCommand());
+		$this->assertEquals('help', $arguments->getTask());
+		$this->assertEquals('', $arguments->getRemainingArguments());
 	}
+
+	public function testWithCommandAndTask(){
+		$arguments = new \SlamDunk\Arguments([ '/bin/slam-dunk', 'beep' ]);
+		$this->assertEquals('/bin/slam-dunk', $arguments->getCommand());
+		$this->assertEquals('beep', $arguments->getTask());
+		$this->assertEquals('', $arguments->getRemainingArguments());
+	}
+
+	public function testWithCommandTaskAndOtherArguments(){
+		$arguments = new \SlamDunk\Arguments([ '/bin/slam-dunk', 'print', 'driver=test', '--print-to-pdf', 'A4' ]);
+		$this->assertEquals('/bin/slam-dunk', $arguments->getCommand());
+		$this->assertEquals('print', $arguments->getTask());
+		$this->assertEquals('driver=test --print-to-pdf A4', $arguments->getRemainingArguments());
+	}
+
 
 }

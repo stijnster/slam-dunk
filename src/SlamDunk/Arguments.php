@@ -23,15 +23,15 @@ class Arguments {
 			'default' => 'help'
 		], $options);
 
-		if(count($this->_arguments) > 0){
-			return $this->_arguments[0];
+		if(count($this->_arguments) > 1){
+			return $this->_arguments[1];
 		}
 
 		return $settings['default'];
 	}
 
 	public function getRemainingArguments() : string {
-		return implode(' ', array_slice(static::$_arguments, 2));
+		return implode(' ', array_slice($this->_arguments, 2));
 	}
 
 }
