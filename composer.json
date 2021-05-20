@@ -1,0 +1,13 @@
+{
+    "name": "stijnster/slam-dunk",
+    "description": "A package to run command-line based tasks",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Stijn Mathysen",
+            "email": "stijn@skylight.be"
+        }
+    ],
+    "require": {}
+}
