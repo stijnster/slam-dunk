@@ -34,6 +34,10 @@ class SlamDunkContextTest extends \PHPUnit\Framework\TestCase{
 		$this->assertEquals(2, count($context->getTasksPaths()));
 		$this->assertGreaterThan(1, count($context->getTasks()));
 		$this->assertEquals(6, count($context->getTasks()));
+
+		$taskNames = array_keys($context->getTasks());
+		sort($taskNames);
+		$this->assertEquals([ 'deep:deeper:a', 'deep:one', 'deep:three', 'deep:two', 'help', 'one' ], $taskNames);
 	}
 
 }
