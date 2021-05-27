@@ -11,7 +11,7 @@ class Arguments {
 	}
 
 	public function getCommand() : ?string {
-		return $this->get(0);
+		return $this->atIndex(0);
 	}
 
 	public function getTaskName(array $options = []){
@@ -19,10 +19,10 @@ class Arguments {
 			'default' => 'help'
 		], $options);
 
-		return $this->get(1, $settings);
+		return $this->atIndex(1, $settings);
 	}
 
-	public function get(int $index, array $options = []) : ?string {
+	public function atIndex(int $index, array $options = []) : ?string {
 		$settings = array_merge([
 			'default' => null
 		], $options);
