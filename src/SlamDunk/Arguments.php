@@ -14,7 +14,7 @@ class Arguments {
 		return $this->get(0);
 	}
 
-	public function getTask(array $options = []){
+	public function getTaskName(array $options = []){
 		$settings = array_merge([
 			'default' => 'help'
 		], $options);
