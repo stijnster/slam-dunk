@@ -7,6 +7,7 @@ class Task {
 	private $_basePath;
 	private $_relativeFilePath;
 	private $_name;
+	private $_runCount = 0;
 
 	public static function relativeFilePathToTaskName(string $relativeFilePath) : string {
 		$result = strtolower(trim($relativeFilePath));
@@ -20,6 +21,11 @@ class Task {
 	public function __construct($basePath, $relativeFilePath){
 		$this->_basePath = rtrim($basePath, '/');
 		$this->_relativeFilePath = ltrim($relativeFilePath, '/');
+		$this->_completeFilePath = FileSystem\Directory::join([ $this->_basePath, $this->_relativeFilePath ]);
+
+		if(!is_file($this->_completeFilePath)){
+			throw new Exception("Task file `{$this->_relativeFilePath}` does not exist in path `{$this->_basePath}`.");
+		}
 	}
 
 	public function getName(){
@@ -28,6 +34,24 @@ class Task {
 		}
 
 		return $this->_name;
+	}
+
+	public function getRunCount() : int {
+		return $this->_runCount;
+	}
+
+	public function run(Context $context) : bool {
+		require $this->_completeFilePath;
+		$this->_runCount++;
+		return true;
+	}
+
+	public function require(Context $context) : bool {
+		if($this->_runCount === 0){
+			return $this->run($context);
+		}
+
+		return false;
 	}
 
 }

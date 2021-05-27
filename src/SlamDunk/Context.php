@@ -52,7 +52,7 @@ class Context {
 		return $this->_tasks;
 	}
 
-	public function getTask(string $taskName) : ?Task {
+	public function getTaskByName(string $taskName) : ?Task {
 		if(array_key_exists($taskName, $this->getTasks())){
 			return $this->getTasks()[$taskName];
 		}
@@ -61,7 +61,7 @@ class Context {
 	}
 
 	public function run(array $options = []){
-		if($task = $this->getTask($this->getArguments()->getTaskName())){
+		if($task = $this->getTaskByName($this->getArguments()->getTaskName())){
 			$task->run($this);
 		}
 	}

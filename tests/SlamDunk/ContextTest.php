@@ -9,9 +9,9 @@ class SlamDunkContextTest extends \PHPUnit\Framework\TestCase{
 		$this->assertEquals([ _ROOT_PATH.DIRECTORY_SEPARATOR.'src'.DIRECTORY_SEPARATOR.'tasks' ], $context->getTasksPaths());
 		$this->assertEquals(1, count($context->getTasks()));
 		$this->assertTrue(array_key_exists('help', $context->getTasks()));
-		$this->assertNull($context->getTask('fake'));
-		$this->assertInstanceOf('\\SlamDunk\\Task', $context->getTask('help'));
-		$this->assertEquals('help', $context->getTask('help')->getName());
+		$this->assertNull($context->getTaskByName('fake'));
+		$this->assertInstanceOf('\\SlamDunk\\Task', $context->getTaskByName('help'));
+		$this->assertEquals('help', $context->getTaskByName('help')->getName());
 	}
 
 	public function testInValidContextCreation(){
@@ -33,11 +33,37 @@ class SlamDunkContextTest extends \PHPUnit\Framework\TestCase{
 		$context->appendTasksPath(_TEST_TASKS_PATH);
 		$this->assertEquals(2, count($context->getTasksPaths()));
 		$this->assertGreaterThan(1, count($context->getTasks()));
-		$this->assertEquals(6, count($context->getTasks()));
+		$this->assertEquals(7, count($context->getTasks()));
 
 		$taskNames = array_keys($context->getTasks());
 		sort($taskNames);
-		$this->assertEquals([ 'deep:deeper:a', 'deep:one', 'deep:three', 'deep:two', 'help', 'one' ], $taskNames);
+		$this->assertEquals([ 'deep:deeper:a', 'deep:one', 'deep:three', 'deep:two', 'empty', 'help', 'one' ], $taskNames);
+	}
+
+	public function testRun(){
+		$context = new \SlamDunk\Context(_ROOT_PATH);
+		$context->appendTasksPath(_TEST_TASKS_PATH);
+		$task = $context->getTaskByName('empty');
+		$this->assertInstanceOf('\\SlamDunk\\Task', $task);
+
+		$this->assertEquals(0, $task->getRunCount());
+		$this->assertTrue($task->run($context));
+		$this->assertEquals(1, $task->getRunCount());
+		$this->assertTrue($task->run($context));
+		$this->assertEquals(2, $task->getRunCount());
+	}
+
+	public function testRequire(){
+		$context = new \SlamDunk\Context(_ROOT_PATH);
+		$context->appendTasksPath(_TEST_TASKS_PATH);
+		$task = $context->getTaskByName('empty');
+		$this->assertInstanceOf('\\SlamDunk\\Task', $task);
+
+		$this->assertEquals(0, $task->getRunCount());
+		$this->assertTrue($task->require($context));
+		$this->assertEquals(1, $task->getRunCount());
+		$this->assertFalse($task->require($context));
+		$this->assertEquals(1, $task->getRunCount());
 	}
 
 }
