@@ -61,6 +61,18 @@ class Context {
 		return null;
 	}
 
+	public function require($tasksNames){
+		if(!is_array($tasksNames)){
+			$tasksNames = [ $tasksNames ];
+		}
+
+		foreach($tasksNames as $taskName){
+			if($task = $this->getTaskByName($taskName)){
+				$task->require($this);
+			}
+		}
+	}
+
 	public function run(array $options = []){
 		$start = new \DateTime();
 		if($task = $this->getTaskByName($this->getArguments()->getTaskName())){

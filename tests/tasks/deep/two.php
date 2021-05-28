@@ -1,16 +1,13 @@
 <?php
-
-define('_TOPIC', 'deep:two');
-
 /**
  * This one has a short description!
  *
  * But is also has a long description.
  */
 
-\SlamDunk\Output::verbose(_TOPIC, 'Verbose from task deep:two');
-\SlamDunk\Output::info(_TOPIC, 'Info from task deep:two');
-\SlamDunk\Output::warning(_TOPIC, 'Warning from task deep:two');
-\SlamDunk\Output::error(_TOPIC, 'Error from task deep:two');
-\SlamDunk\Output::success(_TOPIC, 'Success from task deep:two');
+\SlamDunk\Output::verbose('deep:two', 'Verbose from task deep:two');
+\SlamDunk\Output::info('deep:two', 'Info from task deep:two');
+\SlamDunk\Output::warning('deep:two', 'Warning from task deep:two');
+\SlamDunk\Output::error('deep:two', 'Error from task deep:two');
+\SlamDunk\Output::success('deep:two', 'Success from task deep:two');
 \SlamDunk\Output::writeLine('Direct output');

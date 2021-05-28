@@ -16,6 +16,7 @@ class SlamDunkFormatTest extends \PHPUnit\Framework\TestCase{
 		$this->assertEquals('15 minutes', \SlamDunk\Format::humanTimeDistance(new \DateTime('2021-05-27 19:01:01.123456'), new \DateTime('2021-05-27 19:16:01.123456')));
 		$this->assertEquals('14 minutes and 59 seconds', \SlamDunk\Format::humanTimeDistance(new \DateTime('2021-05-27 19:01:01.123456'), new \DateTime('2021-05-27 19:16:00.123456')));
 		$this->assertEquals('1 hour 14 minutes and 59 seconds', \SlamDunk\Format::humanTimeDistance(new \DateTime('2021-05-27 18:01:01.123456'), new \DateTime('2021-05-27 19:16:00.123456')));
+		$this->assertEquals('3 days 1 hour 14 minutes and 59 seconds', \SlamDunk\Format::humanTimeDistance(new \DateTime('2021-05-24 18:01:01.123456'), new \DateTime('2021-05-27 19:16:00.123456')));
 
 	}
 

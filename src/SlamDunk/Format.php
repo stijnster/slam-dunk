@@ -12,6 +12,9 @@ class Format {
 		if($diff = $start->diff($end, true)){
 			$output = [];
 
+			if($diff->d > 0){
+				array_push($output, static::pluralize($diff->d, 'day', 'days'));
+			}
 			if($diff->h > 0){
 				array_push($output, static::pluralize($diff->h, 'hour', 'hours'));
 			}
