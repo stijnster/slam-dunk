@@ -28,13 +28,68 @@ class Output {
 		}
 	}
 
+	public static function formatTopicForOutput(string $topic) : string {
+		return str_pad(" {$topic } ", 10, ' ', STR_PAD_BOTH);
+	}
+
+	public static function verbose(string $topic, string $message){
+		static::getStreamWriter()
+			->color([
+				\Bramus\Ansi\ControlSequences\EscapeSequences\Enums\SGR::COLOR_FG_WHITE,
+				\Bramus\Ansi\ControlSequences\EscapeSequences\Enums\SGR::COLOR_BG_BLACK_BRIGHT
+			])
+			->text(static::formatTopicForOutput($topic))
+			->nostyle()
+			->text(" ")
+			->text($message)
+			->lf();
+	}
+
 	public static function info(string $topic, string $message){
 		static::getStreamWriter()
 			->color([
 				\Bramus\Ansi\ControlSequences\EscapeSequences\Enums\SGR::COLOR_FG_WHITE,
 				\Bramus\Ansi\ControlSequences\EscapeSequences\Enums\SGR::COLOR_BG_BLUE
 			])
-			->text(str_pad(" {$topic } ", 10, ' ', STR_PAD_BOTH))
+			->text(static::formatTopicForOutput($topic))
+			->nostyle()
+			->text(" ")
+			->text($message)
+			->lf();
+	}
+
+	public static function warning(string $topic, string $message){
+		static::getStreamWriter()
+			->color([
+				\Bramus\Ansi\ControlSequences\EscapeSequences\Enums\SGR::COLOR_FG_BLACK,
+				\Bramus\Ansi\ControlSequences\EscapeSequences\Enums\SGR::COLOR_BG_YELLOW
+			])
+			->text(static::formatTopicForOutput($topic))
+			->nostyle()
+			->text(" ")
+			->text($message)
+			->lf();
+	}
+	public static function error(string $topic, string $message){
+		static::getStreamWriter()
+			->color([
+				\Bramus\Ansi\ControlSequences\EscapeSequences\Enums\SGR::COLOR_FG_WHITE,
+				\Bramus\Ansi\ControlSequences\EscapeSequences\Enums\SGR::COLOR_BG_RED
+			])
+			->text(static::formatTopicForOutput($topic))
+			->nostyle()
+			->text(" ")
+			->text($message)
+			->lf()
+			->bell();
+	}
+	public static function success(string $topic, string $message){
+		static::getStreamWriter()
+			->color([
+				\Bramus\Ansi\ControlSequences\EscapeSequences\Enums\SGR::COLOR_FG_BLACK,
+				\Bramus\Ansi\ControlSequences\EscapeSequences\Enums\SGR::COLOR_BG_GREEN
+			])
+			->text(static::formatTopicForOutput($topic))
 			->nostyle()
 			->text(" ")
 			->text($message)
