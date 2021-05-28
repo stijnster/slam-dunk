@@ -5,6 +5,7 @@ namespace SlamDunk;
 class Context {
 
 	const TASK_FILE_NAME_REGEX = '/[a-z_-]+\.php$/';
+	const TOPIC = 'main';
 
 	private $_rootPath;
 	private $_arguments;
@@ -61,9 +62,24 @@ class Context {
 	}
 
 	public function run(array $options = []){
+		$start = new \DateTime();
 		if($task = $this->getTaskByName($this->getArguments()->getTaskName())){
 			$task->run($this);
 		}
+		$end = new \DateTime();
+
+		Output::emptyLine();
+		Output::info(static::TOPIC, 'Completed '.Format::pluralize($this->getRunCount(), 'task', 'tasks').' in '.Format::humanTimeDistance($start, $end));
+		Output::bell();
+	}
+
+	public function getRunCount() : int {
+		$count = 0;
+		foreach($this->getTasks() as $task){
+			$count += $task->getRunCount();
+		}
+
+		return $count;
 	}
 
 }
