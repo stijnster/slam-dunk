@@ -11,6 +11,7 @@ class Context {
 	private $_arguments;
 	private $_tasksPath;
 	private $_tasks;
+	private $_silent = false;
 
 	public function __construct(string $rootPath, array $arguments = []){
 		if(!is_dir($rootPath)){
@@ -21,6 +22,14 @@ class Context {
 		$this->_tasksPaths = [];
 
 		$this->appendTasksPath(FileSystem\Directory::join([ 'tasks' ], [ 'basePath' => __DIR__.DIRECTORY_SEPARATOR.'..' ]));
+	}
+
+	public function isSilent() : bool {
+		return $this->_silent;
+	}
+
+	public function setSilent(bool $silent){
+		$this->_silent = $silent;
 	}
 
 	public function getArguments() : Arguments {
@@ -80,9 +89,11 @@ class Context {
 		}
 		$end = new \DateTime();
 
-		Output::emptyLine();
-		Output::info(static::TOPIC, 'Completed '.Format::pluralize($this->getRunCount(), 'task', 'tasks').' in '.Format::humanTimeDistance($start, $end));
-		Output::bell();
+		if(!$this->isSilent()){
+			Output::emptyLine();
+			Output::info(static::TOPIC, 'Completed '.Format::pluralize($this->getRunCount(), 'task', 'tasks').' in '.Format::humanTimeDistance($start, $end));
+			Output::bell();
+		}
 	}
 
 	public function getRunCount() : int {

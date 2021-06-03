@@ -10,6 +10,10 @@ class Arguments {
 		$this->_arguments = $arguments;
 	}
 
+	public function toString(){
+		return trim(implode(' ', $this->_arguments));
+	}
+
 	public function getCommand() : ?string {
 		return $this->atIndex(0);
 	}
