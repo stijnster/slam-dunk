@@ -14,6 +14,12 @@ class Output {
 		return static::$_streamWriter;
 	}
 
+	public static function write(string $text){
+		static::getStreamWriter()
+			->nostyle()
+			->text($text);
+	}
+
 	public static function writeLine(string $text){
 		static::getStreamWriter()
 			->nostyle()
