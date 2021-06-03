@@ -6,7 +6,7 @@ class Version {
 
 	private static $version = [
 		'major' => 0,
-		'minor' => 0,
+		'minor' => 1,
 		'maintenance' => 0,
 		'build' => 0
 	];
