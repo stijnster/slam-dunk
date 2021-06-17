@@ -29,4 +29,35 @@ class Directory {
 		return $combinedPath;
 	}
 
+	public static function recursiveDelete(string $directory) : int {
+		$count = 0;
+
+		if(static::exists($directory)){
+			foreach(Finder::find($directory, [ 'relative' => false ]) as $file){
+				if(is_file($file)){
+					unlink($file);
+					$count++;
+				}
+				if(is_dir($file)){
+					static::remove($file);
+					$count++;
+				}
+			}
+		}
+
+		return $count;
+	}
+
+	public static function ensure(string $directory){
+		if(!static::exists($directory)){
+			mkdir($directory, 0777, true);
+		}
+	}
+
+	public static function remove(string $directory){
+		if(static::exists($directory)){
+			rmdir($directory);
+		}
+	}
+
 }

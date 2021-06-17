@@ -12,7 +12,7 @@ class Finder {
 		$results = [];
 		if(Directory::exists($basePath)){
 			$iterator = new \RecursiveDirectoryIterator($basePath, \RecursiveDirectoryIterator::SKIP_DOTS);
-			$iterator = new \RecursiveIteratorIterator($iterator);
+			$iterator = new \RecursiveIteratorIterator($iterator, \RecursiveIteratorIterator::CHILD_FIRST);
 			if($settings['regexFilter'] !== NULL){
 				$iterator = new \RegexIterator($iterator, $settings['regexFilter'], \RecursiveRegexIterator::GET_MATCH);
 			}
