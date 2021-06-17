@@ -7,5 +7,10 @@ class SlamDunkShellTest extends \PHPUnit\Framework\TestCase{
 		$this->assertEquals('ls one two three', \SlamDunk\Shell::composeCommandAndArguments('ls', [ 'one', 'two', 'three' ]));
 	}
 
+	public function testExec(){
+		$this->assertEquals(0, \SlamDunk\Shell::exec('ls', [ '-alh' ]));
+		$this->assertNotEquals(0, \SlamDunk\Shell::exec('some-fake-command'));
+	}
+
 
 }
