@@ -38,4 +38,27 @@ class Format {
 		return '???';
 	}
 
+	public static function fileSize(int $bytes){
+		if ($bytes >= 1073741824){
+			$result = number_format($bytes / 1073741824, 2) . ' GB';
+		}
+		elseif ($bytes >= 1048576){
+			$result = number_format($bytes / 1048576, 2) . ' MB';
+		}
+		elseif ($bytes >= 1024){
+			$result = number_format($bytes / 1024, 2) . ' KB';
+		}
+		elseif ($bytes > 1){
+			$result = $bytes . ' bytes';
+		}
+		elseif ($bytes == 1){
+			$result = $bytes . ' byte';
+		}
+		else{
+			$result = '0 bytes';
+		}
+
+		return $result;
+	}
+
 }

@@ -17,7 +17,14 @@ class SlamDunkFormatTest extends \PHPUnit\Framework\TestCase{
 		$this->assertEquals('14 minutes and 59 seconds', \SlamDunk\Format::humanTimeDistance(new \DateTime('2021-05-27 19:01:01.123456'), new \DateTime('2021-05-27 19:16:00.123456')));
 		$this->assertEquals('1 hour 14 minutes and 59 seconds', \SlamDunk\Format::humanTimeDistance(new \DateTime('2021-05-27 18:01:01.123456'), new \DateTime('2021-05-27 19:16:00.123456')));
 		$this->assertEquals('3 days 1 hour 14 minutes and 59 seconds', \SlamDunk\Format::humanTimeDistance(new \DateTime('2021-05-24 18:01:01.123456'), new \DateTime('2021-05-27 19:16:00.123456')));
-
 	}
+
+	public function testFileSize(){
+		$this->assertEquals('0 bytes', \SlamDunk\Format::fileSize(0));
+		$this->assertEquals('1023 bytes', \SlamDunk\Format::fileSize(1023));
+		$this->assertEquals('1.00 KB', \SlamDunk\Format::fileSize(1024));
+		$this->assertEquals('3.01 GB', \SlamDunk\Format::fileSize(1024 * 1024 * 1024 * 3 + 12434857));
+	}
+
 
 }

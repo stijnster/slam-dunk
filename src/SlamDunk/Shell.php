@@ -8,8 +8,10 @@ class Shell {
 		return shell_exec(static::composeCommandAndArguments($command, $arguments));
 	}
 
-	public static function stream(string $command, array $arguments = []){
-		passthru(static::composeCommandAndArguments($command, $arguments));
+	public static function stream(string $command, array $arguments = []) : int {
+		passthru(static::composeCommandAndArguments($command, $arguments), $result);
+
+		return $result;
 	}
 
 	public static function exec(string $command, array $arguments = [], array $options = []) : int {
