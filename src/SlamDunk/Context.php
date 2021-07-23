@@ -79,6 +79,10 @@ class Context {
 			if($task = $this->getTaskByName($taskName)){
 				$task->require($this);
 			}
+			else{
+				Output::error(static::TOPIC, "Cannot require task with name `{$taskName}`");
+				exit(1);
+			}
 		}
 	}
 
@@ -86,6 +90,10 @@ class Context {
 		$start = new \DateTime();
 		if($task = $this->getTaskByName($this->getArguments()->getTaskName())){
 			$task->run($this);
+		}
+		else{
+			Output::error(static::TOPIC, 'Cannot find task with name `'.$this->getArguments()->getTaskName().'`');
+			exit(1);
 		}
 		$end = new \DateTime();
 
