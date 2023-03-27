@@ -8,12 +8,13 @@ $command = $context->getArguments()->atIndex(2);
 
 
 if(\SlamDunk\Validator::isNotPresent($command)){
-	echo "";
-	exit(0);
+	$tasks = $context->getTaskNames();
+}
+else{
+	$tasks = $context->getAlternativeTasks($command);
 }
 
-$alternativeTasks = $context->getAlternativeTasks($command);
-foreach($alternativeTasks as $task){
+foreach($tasks as $task){
 	echo "'{$task}' ";
 }
 exit(0);
