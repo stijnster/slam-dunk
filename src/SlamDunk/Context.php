@@ -9,7 +9,7 @@ class Context {
 
 	private $_rootPath;
 	private $_arguments;
-	private $_tasksPath;
+	private $_tasksPaths;
 	private $_tasks;
 	private $_silent = false;
 
@@ -32,6 +32,10 @@ class Context {
 		$this->_silent = $silent;
 	}
 
+	public function getRootPath() : string {
+		return $this->_rootPath;
+	}
+
 	public function getArguments() : Arguments {
 		return $this->_arguments;
 	}
@@ -47,7 +51,7 @@ class Context {
 		return $this->_tasksPaths;
 	}
 
-	public function getTasks(){
+	public function getTasks() : array {
 		if($this->_tasks === NULL){
 			$this->_tasks = [];
 			foreach($this->_tasksPaths as $basePath){
@@ -62,12 +66,43 @@ class Context {
 		return $this->_tasks;
 	}
 
+	public function getTaskNames() : array {
+		return array_keys($this->getTasks());
+	}
+
 	public function getTaskByName(string $taskName) : ?Task {
 		if(array_key_exists($taskName, $this->getTasks())){
 			return $this->getTasks()[$taskName];
 		}
 
 		return null;
+	}
+
+	public function getAlternativeTasks(string $taskName) : array {
+		$result = [];
+
+		foreach($this->getTaskNames() as $existingTask){
+			if(strpos($existingTask, $taskName) !== FALSE){
+				array_push($result, $existingTask);
+			}
+		}
+
+		return $result;
+	}
+
+	public function printAlternativeTasks(string $taskName){
+		$alternativeTasks = $this->getAlternativeTasks($taskName);
+
+		if($alternativeTasks === 0){
+			return;
+		}
+		Output::emptyLine();
+		Output::writeLine("But how about:");
+		Output::emptyLine();
+		foreach($alternativeTasks as $alternativeTask){
+			Output::writeLine("\t{$alternativeTask}");
+		}
+		Output::emptyLine();
 	}
 
 	public function require($tasksNames){
@@ -93,6 +128,7 @@ class Context {
 		}
 		else{
 			Output::error(static::TOPIC, 'Cannot find task with name `'.$this->getArguments()->getTaskName().'`');
+			$this->printAlternativeTasks($this->getArguments()->getTaskName());
 			exit(1);
 		}
 		$end = new \DateTime();
