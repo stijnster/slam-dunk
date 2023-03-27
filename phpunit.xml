@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<phpunit bootstrap="tests/bootstrap.php" colors="true">
-	<testsuites>
-		<testsuite name="SlamDunk Suite">
-			<directory>tests/SlamDunk/</directory>
-		</testsuite>
-	</testsuites>
-
-	<filter>
-		<whitelist>
-			<directory suffix=".php">src/SlamDunk/</directory>
-		</whitelist>
-	</filter>
-
-	<php>
-		<ini name="date.timezone" value="UTC"/>
-	</php>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="tests/bootstrap.php" colors="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd" cacheDirectory=".phpunit.cache">
+  <coverage>
+    <include>
+      <directory suffix=".php">src/SlamDunk/</directory>
+    </include>
+  </coverage>
+  <testsuites>
+    <testsuite name="SlamDunk Suite">
+      <directory>tests/SlamDunk/</directory>
+    </testsuite>
+  </testsuites>
+  <php>
+    <ini name="date.timezone" value="UTC"/>
+  </php>
 </phpunit>
