@@ -7,7 +7,7 @@ class Settings {
 	private static $_cached = [];
 	private static $_map = [];
 
-	public function clear(){
+	public static function clear(){
 		static::$_cached = [];
 		static::$_map = [];
 	}
