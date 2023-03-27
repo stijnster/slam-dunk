@@ -93,9 +93,10 @@ class Context {
 	public function printAlternativeTasks(string $taskName){
 		$alternativeTasks = $this->getAlternativeTasks($taskName);
 
-		if($alternativeTasks === 0){
+		if(count($alternativeTasks) === 0){
 			return;
 		}
+
 		Output::emptyLine();
 		Output::writeLine("But how about:");
 		Output::emptyLine();
