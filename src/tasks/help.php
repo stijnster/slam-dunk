@@ -7,7 +7,7 @@
 $command = $context->getArguments()->atIndex(2);
 
 function replacePlaceholders(\SlamDunk\Context $context, string $text) : string {
-	return str_replace('__TASK__', $context->getArguments()->atIndex(2), str_replace('__COMMAND__', $context->getArguments()->getCommand(), $text));
+	return str_replace('__TASK__', (string)$context->getArguments()->atIndex(2), str_replace('__COMMAND__', (string)$context->getArguments()->getCommand(), $text));
 }
 
 if($command === null){
