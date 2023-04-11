@@ -87,7 +87,9 @@ class Context {
 			}
 		}
 
-		return $result;
+		sort($result);
+
+		return array_values($result);
 	}
 
 	public function printAlternativeTasks(string $taskName){

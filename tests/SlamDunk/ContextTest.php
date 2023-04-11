@@ -73,7 +73,7 @@ class SlamDunkContextTest extends \PHPUnit\Framework\TestCase{
 		$this->assertNull($task);
 
 		$this->assertEquals([], $context->getAlternativeTasks('unknown'));
-		$this->assertEquals([ 'deep:all', 'deep:three', 'deep:one', 'deep:deeper:a', 'deep:two' ], $context->getAlternativeTasks('deep'));
+		$this->assertEquals([ 'deep:all', 'deep:deeper:a', 'deep:one', 'deep:three', 'deep:two' ], $context->getAlternativeTasks('deep'));
 		$this->assertEquals([ 'deep:all' ], $context->getAlternativeTasks('deep:a'));
 		$this->assertEquals([ 'deep:all', 'deep:deeper:a' ], $context->getAlternativeTasks(':a'));
 	}
